@@ -1,24 +1,34 @@
-const EMAIL = 'your-email@icloud.com';
-const PASSWORD = 'your-app-specific-password';
-const USER_ID = 'your-user-id';  // From Step 2
-const CALENDAR_ID = 'your-calendar-id';  // From Step 3
+// Get credentials from HTTP Request Authorization header
+const authHeader = $input.first().json.headers.Authorization;
+const decoded = Buffer.from(authHeader.replace('Basic ', ''), 'base64').toString('utf-8');
+const [EMAIL, PASSWORD] = decoded.split(':');
 
+// Your IDs
+const USER_ID = 'your-user-id';
+const CALENDAR_ID = 'your-calendar-id';
 const BASE_URL = `https://caldav.icloud.com/${USER_ID}/calendars/${CALENDAR_ID}`;
+
 const eventUid = `icloud-${Date.now()}`;
 const now = new Date();
 const dtstamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 
+// Get event data
+const start = $('Edit Fields').first().json.start;
+const end = $('Edit Fields').first().json.eind;
+const name = $('Edit Fields').first().json.Eventnaam;
+const desc = $('Edit Fields').first().json.omschrijving;
+
 const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//n8n//EN
+PRODID:-//Test//EN
 CALSCALE:GREGORIAN
 BEGIN:VEVENT
 UID:${eventUid}
 DTSTAMP:${dtstamp}
-DTSTART:${$input.first().json.start}
-DTEND:${$input.first().json.eind}
-SUMMARY:${$input.first().json.Eventnaam}
-DESCRIPTION:${$input.first().json.omschrijving}
+DTSTART:${start}
+DTEND:${end}
+SUMMARY:${name}
+DESCRIPTION:${desc}
 END:VEVENT
 END:VCALENDAR`;
 
@@ -35,7 +45,7 @@ try {
       'Authorization': `Basic ${credentials}`
     }
   });
-
+  
   return { 
     status: 201, 
     success: true,
