@@ -28,8 +28,8 @@ import requests
 from requests.auth import HTTPBasicAuth
 from xml.etree import ElementTree as ET
 
-EMAIL = input("Email: ")
-PASSWORD = input("Password: ")
+EMAIL = input("Email")
+PASSWORD = input("your-app-specific-password")
 
 response = requests.request(
     'PROPFIND',
