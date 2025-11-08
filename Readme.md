@@ -1,6 +1,6 @@
 # CalDAV iCloud Calendar - Complete Setup Summary
 
-## Quick Overview
+## Quick Overview 
 
 Integrate iCloud Calendar with n8n using CalDAV to automatically create events.
 
@@ -14,6 +14,7 @@ Integrate iCloud Calendar with n8n using CalDAV to automatically create events.
 ---
 
 ## Step 1: Get Your Credentials
+
 
 ### Generate App-Specific Password
 1. Go to https://appleid.apple.com
